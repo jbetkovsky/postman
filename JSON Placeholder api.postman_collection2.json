@@ -1,0 +1,290 @@
+{
+	"info": {
+		"_postman_id": "a6ea15cd-d5f1-46ab-a5d6-7c9648304a67",
+		"name": "JSON Placeholder - Params",
+		"schema": "https://schema.getpostman.com/json/collection/v2.1.0/collection.json",
+		"_exporter_id": "23356750"
+	},
+	"item": [
+		{
+			"name": "posts",
+			"request": {
+				"method": "GET",
+				"header": [],
+				"url": {
+					"raw": "https://jsonplaceholder.typicode.com/posts?title_like=sunt&_limit=&_sort=title&_order=desc",
+					"protocol": "https",
+					"host": [
+						"jsonplaceholder",
+						"typicode",
+						"com"
+					],
+					"path": [
+						"posts"
+					],
+					"query": [
+						{
+							"key": "title_like",
+							"value": "sunt"
+						},
+						{
+							"key": "_limit",
+							"value": ""
+						},
+						{
+							"key": "_sort",
+							"value": "title"
+						},
+						{
+							"key": "_order",
+							"value": "desc"
+						}
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "comments",
+			"event": [
+				{
+					"listen": "test",
+					"script": {
+						"exec": [
+							"pm.test(\"Verify response status code\",()=>{\r",
+							"    console.log(pm.response)\r",
+							"    pm.response.to.have.status(200);\r",
+							"    //pm.expect(pm.response.code).to.eql(200)    \r",
+							"})\r",
+							"pm.test(\"Verify response time\",() =>{\r",
+							"    pm.expect(pm.response.responseTime).to.be.below(200)\r",
+							"})\r",
+							"//Weryfikacja czy mail zawiera \"@\"\"\r",
+							"pm.test(\"Verify response email\"),()=> {\r",
+							"const responseBody = pm.response.json();\r",
+							"pm.expect(responseBody[3].email).to.include(\"@\");\r",
+							"}\r",
+							"//Weryfikuje czy wszystkie maile posiadają \"@\"\"\r",
+							"pm.test(\"Should verify all response email\",()=> {\r",
+							"const responseBody = pm.response.json();\r",
+							"responseBody.map(obj => {\r",
+							"    console.log(obj.email)\r",
+							"    pm.expect(obj.email).to.include(\"@\");\r",
+							"})\r",
+							"})\r",
+							"//Headers verification - Content-type\r",
+							"pm.test(\"Should verify all response email\",()=> {\r",
+							"    pm.response.to.have.header(\"Content-Type\");\r",
+							"})\r",
+							"pm.test(\"Should verify Content type value\", ()=> {\r",
+							"    pm.expect(pm.response.headers.get(\"Content-Type\")).to.eql(\"application/json; charset=utf-8\");\r",
+							"})"
+						],
+						"type": "text/javascript"
+					}
+				}
+			],
+			"request": {
+				"method": "GET",
+				"header": [],
+				"url": {
+					"raw": "https://jsonplaceholder.typicode.com/comments?postId=2&postId=5&_limit=10&_order=asc",
+					"protocol": "https",
+					"host": [
+						"jsonplaceholder",
+						"typicode",
+						"com"
+					],
+					"path": [
+						"comments"
+					],
+					"query": [
+						{
+							"key": "postId",
+							"value": "2"
+						},
+						{
+							"key": "postId",
+							"value": "5"
+						},
+						{
+							"key": "_limit",
+							"value": "10"
+						},
+						{
+							"key": "_order",
+							"value": "asc"
+						},
+						{
+							"key": "title_like",
+							"value": "sunt",
+							"disabled": true
+						}
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "posts",
+			"event": [
+				{
+					"listen": "test",
+					"script": {
+						"exec": [
+							"pm.test(\"Set Global\"), () =>{\r",
+							"    pm.globals.set(\"Vehicle\", \"Ferrari\")\r",
+							"\r",
+							"})"
+						],
+						"type": "text/javascript"
+					}
+				}
+			],
+			"request": {
+				"method": "POST",
+				"header": [],
+				"body": {
+					"mode": "raw",
+					"raw": "{\r\n\"userId\": 66,\r\n\"id\": 1625,\r\n\"title\": \"Tytuł testowy\",\r\n\"body\": \"POST POST\"\r\n}",
+					"options": {
+						"raw": {
+							"language": "json"
+						}
+					}
+				},
+				"url": {
+					"raw": "https://jsonplaceholder.typicode.com/posts",
+					"protocol": "https",
+					"host": [
+						"jsonplaceholder",
+						"typicode",
+						"com"
+					],
+					"path": [
+						"posts"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "post number 3",
+			"request": {
+				"method": "PUT",
+				"header": [],
+				"body": {
+					"mode": "raw",
+					"raw": "{\r\n    \"userId\": 3,\r\n    \"id\": 1,\r\n    \"title\": \"sunt aut facere repellat provident occaecati excepturi optio reprehenderit\",\r\n    \"body\": \"quia et suscipit\\nsuscipit recusandae consequuntur expedita et cum\\nreprehenderit molestiae ut ut quas totam\\nnostrum rerum est autem sunt rem eveniet architecto\"\r\n}",
+					"options": {
+						"raw": {
+							"language": "json"
+						}
+					}
+				},
+				"url": {
+					"raw": "https://jsonplaceholder.typicode.com/posts/3",
+					"protocol": "https",
+					"host": [
+						"jsonplaceholder",
+						"typicode",
+						"com"
+					],
+					"path": [
+						"posts",
+						"3"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "post number 3 - delete",
+			"request": {
+				"method": "DELETE",
+				"header": [],
+				"body": {
+					"mode": "raw",
+					"raw": "{\r\n    \"userId\": 3,\r\n    \"id\": 1,\r\n    \"title\": \"sunt aut facere repellat provident occaecati excepturi optio reprehenderit\",\r\n    \"body\": \"quia et suscipit\\nsuscipit recusandae consequuntur expedita et cum\\nreprehenderit molestiae ut ut quas totam\\nnostrum rerum est autem sunt rem eveniet architecto\"\r\n}",
+					"options": {
+						"raw": {
+							"language": "json"
+						}
+					}
+				},
+				"url": {
+					"raw": "https://jsonplaceholder.typicode.com/posts/3",
+					"protocol": "https",
+					"host": [
+						"jsonplaceholder",
+						"typicode",
+						"com"
+					],
+					"path": [
+						"posts",
+						"3"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "New Request",
+			"event": [
+				{
+					"listen": "prerequest",
+					"script": {
+						"exec": [
+							"function generatorEmail(){\r",
+							"const randomNumbers = Math.floor(Math.random() * (10000000 - 1) + 1);\r",
+							"console.log(randomNumbers)\r",
+							"}\r",
+							"generatorEmail();"
+						],
+						"type": "text/javascript"
+					}
+				},
+				{
+					"listen": "test",
+					"script": {
+						"exec": [
+							"function showconsole2(){\r",
+							"    console.log(\"Skrypt wykonywany podczas testu\")\r",
+							"}\r",
+							"showconsole2();\r",
+							""
+						],
+						"type": "text/javascript"
+					}
+				}
+			],
+			"request": {
+				"method": "PUT",
+				"header": [],
+				"body": {
+					"mode": "raw",
+					"raw": "{\r\n    \"id\": 2,\r\n    \"name\": \"Ervin Howell\",\r\n    \"username\": \"Antonette\",\r\n    \"email\": \"emailtestowy@test.pl,\r\n    \"address\": {\r\n        \"street\": \"Victor Plains\",\r\n        \"suite\": \"Suite 879\",\r\n        \"city\": \"Wisokyburgh\",\r\n        \"zipcode\": \"90566-7771\",\r\n        \"geo\": {\r\n            \"lat\": \"-43.9509\",\r\n            \"lng\": \"-34.4618\"\r\n        }\r\n    },\r\n    \"phone\": \"010-692-6593 x09125\",\r\n    \"website\": \"anastasia.net\",\r\n    \"company\": {\r\n        \"name\": \"Deckow-Crist\",\r\n        \"catchPhrase\": \"Proactive didactic contingency\",\r\n        \"bs\": \"synergize scalable supply-chains\"\r\n    }\r\n}",
+					"options": {
+						"raw": {
+							"language": "json"
+						}
+					}
+				},
+				"url": {
+					"raw": "https://jsonplaceholder.typicode.com/users/2",
+					"protocol": "https",
+					"host": [
+						"jsonplaceholder",
+						"typicode",
+						"com"
+					],
+					"path": [
+						"users",
+						"2"
+					]
+				}
+			},
+			"response": []
+		}
+	]
+}

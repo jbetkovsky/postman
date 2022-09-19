@@ -1,0 +1,471 @@
+{
+	"info": {
+		"_postman_id": "536f8da0-f1de-4060-bcb3-dcadfcf1b580",
+		"name": "Trello - test api",
+		"schema": "https://schema.getpostman.com/json/collection/v2.1.0/collection.json",
+		"_exporter_id": "23356750"
+	},
+	"item": [
+		{
+			"name": "Create a Board - Trello",
+			"request": {
+				"method": "POST",
+				"header": [],
+				"url": {
+					"raw": "{{baseUrl}}/boards/?name=Tablica API&key={{key}}&token={{token}}&desc=Opis tablicy",
+					"host": [
+						"{{baseUrl}}"
+					],
+					"path": [
+						"boards",
+						""
+					],
+					"query": [
+						{
+							"key": "name",
+							"value": "Tablica API"
+						},
+						{
+							"key": "key",
+							"value": "{{key}}"
+						},
+						{
+							"key": "token",
+							"value": "{{token}}"
+						},
+						{
+							"key": "desc",
+							"value": "Opis tablicy"
+						}
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "Check boards",
+			"event": [
+				{
+					"listen": "test",
+					"script": {
+						"exec": [
+							"pm.test(\"Verify response status code\",()=>{\r",
+							"    console.log(pm.response)\r",
+							"    pm.response.to.have.status(200);\r",
+							"    //pm.expect(pm.response.code).to.eql(200)    \r",
+							"})\r",
+							"pm.test(\"Verify response time\",() =>{\r",
+							"    pm.expect(pm.response.responseTime).to.be.below(200)\r",
+							"})\r",
+							"pm.test(\"Status code name\", function () {\r",
+							"    pm.response.to.have.status(\"OK\");\r",
+							"})"
+						],
+						"type": "text/javascript"
+					}
+				}
+			],
+			"request": {
+				"method": "GET",
+				"header": [],
+				"url": {
+					"raw": "{{baseUrl}}/members/me/boards?name=Tablica API&key={{key}}&token={{token}}&desc=Opis tablicy",
+					"host": [
+						"{{baseUrl}}"
+					],
+					"path": [
+						"members",
+						"me",
+						"boards"
+					],
+					"query": [
+						{
+							"key": "name",
+							"value": "Tablica API"
+						},
+						{
+							"key": "key",
+							"value": "{{key}}"
+						},
+						{
+							"key": "token",
+							"value": "{{token}}"
+						},
+						{
+							"key": "desc",
+							"value": "Opis tablicy"
+						}
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "Create a List on a Board - Trello",
+			"request": {
+				"method": "POST",
+				"header": [],
+				"url": {
+					"raw": "{{baseUrl}}/boards/63225f44ab531503a7533cb4/lists?name=Lista TESTOWA&key={{key}}&token={{token}}",
+					"host": [
+						"{{baseUrl}}"
+					],
+					"path": [
+						"boards",
+						"63225f44ab531503a7533cb4",
+						"lists"
+					],
+					"query": [
+						{
+							"key": "name",
+							"value": "Lista TESTOWA"
+						},
+						{
+							"key": "key",
+							"value": "{{key}}"
+						},
+						{
+							"key": "token",
+							"value": "{{token}}"
+						}
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "Get lists on a board",
+			"event": [
+				{
+					"listen": "test",
+					"script": {
+						"exec": [
+							"pm.test(\"Verify response status code\",()=>{\r",
+							"    console.log(pm.response)\r",
+							"    pm.response.to.have.status(200);\r",
+							"    //pm.expect(pm.response.code).to.eql(200)    \r",
+							"})\r",
+							"pm.test(\"Verify response time\",() =>{\r",
+							"    pm.expect(pm.response.responseTime).to.be.below(250)\r",
+							"})\r",
+							"pm.test(\"Status code name\", function () {\r",
+							"    pm.response.to.have.status(\"OK\");\r",
+							"    pm.expect(pm.response.status).to.be.a(\"string\");\r",
+							"    })\r",
+							"pm.test(\"Verify post ID\", function () {\r",
+							"    const responseBody = pm.response.json();\r",
+							"    //console.log(responseBody[1].id);\r",
+							"    pm.expect(responseBody[0].id).to.eql(\"6322638eed879702083b762e\");\r",
+							"})\r",
+							"//Liczba znaków - weryfikacja \"name\"\r",
+							"pm.test(\"Verify length of name\"),()=> {\r",
+							"const responseBody = pm.response.json();\r",
+							"pm.expect(responseBody[1].name).to.have.lengthOf(14);\r",
+							"}\r",
+							""
+						],
+						"type": "text/javascript"
+					}
+				}
+			],
+			"request": {
+				"method": "GET",
+				"header": [],
+				"url": {
+					"raw": "{{baseUrl}}/boards/63225f44ab531503a7533cb4/lists?&key={{key}}&token={{token}}",
+					"host": [
+						"{{baseUrl}}"
+					],
+					"path": [
+						"boards",
+						"63225f44ab531503a7533cb4",
+						"lists"
+					],
+					"query": [
+						{
+							"key": null,
+							"value": null
+						},
+						{
+							"key": "key",
+							"value": "{{key}}"
+						},
+						{
+							"key": "token",
+							"value": "{{token}}"
+						}
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "Add new card",
+			"event": [
+				{
+					"listen": "test",
+					"script": {
+						"exec": [
+							"pm.test(\"Verify response status code\",()=>{\r",
+							"    console.log(pm.response)\r",
+							"    pm.response.to.have.status(200);\r",
+							"    //pm.expect(pm.response.code).to.eql(200)    \r",
+							"})\r",
+							"pm.test(\"Verify response time\",() =>{\r",
+							"    pm.expect(pm.response.responseTime).to.be.below(200)\r",
+							"})\r",
+							"pm.test(\"Status code name\", function () {\r",
+							"    pm.response.to.have.status(\"OK\");\r",
+							"})"
+						],
+						"type": "text/javascript"
+					}
+				}
+			],
+			"request": {
+				"method": "POST",
+				"header": [],
+				"url": {
+					"raw": "{{baseUrl}}/cards?idList=63225f44ab531503a7533cbb&key={{key}}&token={{token}}&name=Wystąpił błąd - example",
+					"host": [
+						"{{baseUrl}}"
+					],
+					"path": [
+						"cards"
+					],
+					"query": [
+						{
+							"key": "idList",
+							"value": "63225f44ab531503a7533cbb"
+						},
+						{
+							"key": "key",
+							"value": "{{key}}"
+						},
+						{
+							"key": "token",
+							"value": "{{token}}"
+						},
+						{
+							"key": "name",
+							"value": "Wystąpił błąd - example"
+						}
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "get lists  on a board",
+			"event": [
+				{
+					"listen": "test",
+					"script": {
+						"exec": [
+							"pm.test(\"Verify response status code\",()=>{\r",
+							"    console.log(pm.response)\r",
+							"    pm.response.to.have.status(200);\r",
+							"    //pm.expect(pm.response.code).to.eql(200)    \r",
+							"})\r",
+							"pm.test(\"Verify response time\",() =>{\r",
+							"    pm.expect(pm.response.responseTime).to.be.below(200)\r",
+							"})\r",
+							"pm.test(\"Status code name\", function () {\r",
+							"    pm.response.to.have.status(\"OK\");\r",
+							"})\r",
+							""
+						],
+						"type": "text/javascript"
+					}
+				}
+			],
+			"request": {
+				"method": "GET",
+				"header": [],
+				"url": {
+					"raw": "{{baseUrl}}/boards/63225f44ab531503a7533cb4/cards?idList=63225f44ab531503a7533cbb&key={{key}}&token={{token}}&name=Wystąpił błąd - example",
+					"host": [
+						"{{baseUrl}}"
+					],
+					"path": [
+						"boards",
+						"63225f44ab531503a7533cb4",
+						"cards"
+					],
+					"query": [
+						{
+							"key": "idList",
+							"value": "63225f44ab531503a7533cbb"
+						},
+						{
+							"key": "key",
+							"value": "{{key}}"
+						},
+						{
+							"key": "token",
+							"value": "{{token}}"
+						},
+						{
+							"key": "name",
+							"value": "Wystąpił błąd - example"
+						}
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "Update a Card",
+			"event": [
+				{
+					"listen": "test",
+					"script": {
+						"exec": [
+							"pm.test(\"Verify response status code\",()=>{\r",
+							"    console.log(pm.response)\r",
+							"    pm.response.to.have.status(200);\r",
+							"    //pm.expect(pm.response.code).to.eql(200)    \r",
+							"})\r",
+							"pm.test(\"Verify response time\",() =>{\r",
+							"    pm.expect(pm.response.responseTime).to.be.below(200)\r",
+							"})\r",
+							"pm.test(\"Status code name\", function () {\r",
+							"    pm.response.to.have.status(\"OK\");\r",
+							"})"
+						],
+						"type": "text/javascript"
+					}
+				}
+			],
+			"request": {
+				"method": "PUT",
+				"header": [],
+				"url": {
+					"raw": "{{baseUrl}}/cards/6322679e4497700069f11fe5/?key={{key}}&token={{token}}&name=Lorem ipsum",
+					"host": [
+						"{{baseUrl}}"
+					],
+					"path": [
+						"cards",
+						"6322679e4497700069f11fe5",
+						""
+					],
+					"query": [
+						{
+							"key": "idList",
+							"value": "63225f44ab531503a7533cbb",
+							"disabled": true
+						},
+						{
+							"key": "key",
+							"value": "{{key}}"
+						},
+						{
+							"key": "token",
+							"value": "{{token}}"
+						},
+						{
+							"key": "name",
+							"value": "Lorem ipsum"
+						}
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "Delete a Card",
+			"event": [
+				{
+					"listen": "test",
+					"script": {
+						"exec": [
+							"pm.test(\"Verify response status code\",()=>{\r",
+							"    console.log(pm.response)\r",
+							"    pm.response.to.have.status(200);\r",
+							"    //pm.expect(pm.response.code).to.eql(200)    \r",
+							"})\r",
+							"pm.test(\"Verify response time\",() =>{\r",
+							"    pm.expect(pm.response.responseTime).to.be.below(200)\r",
+							"})\r",
+							"pm.test(\"Status code name\", function () {\r",
+							"    pm.response.to.have.status(\"OK\");\r",
+							"})"
+						],
+						"type": "text/javascript"
+					}
+				}
+			],
+			"request": {
+				"method": "DELETE",
+				"header": [],
+				"url": {
+					"raw": "{{baseUrl}}/cards/6322679e4497700069f11fe5/?key={{key}}&token={{token}}&name=Lorem ipsum",
+					"host": [
+						"{{baseUrl}}"
+					],
+					"path": [
+						"cards",
+						"6322679e4497700069f11fe5",
+						""
+					],
+					"query": [
+						{
+							"key": "idList",
+							"value": "63225f44ab531503a7533cbb",
+							"disabled": true
+						},
+						{
+							"key": "key",
+							"value": "{{key}}"
+						},
+						{
+							"key": "token",
+							"value": "{{token}}"
+						},
+						{
+							"key": "name",
+							"value": "Lorem ipsum"
+						}
+					]
+				}
+			},
+			"response": []
+		}
+	],
+	"event": [
+		{
+			"listen": "prerequest",
+			"script": {
+				"type": "text/javascript",
+				"exec": [
+					""
+				]
+			}
+		},
+		{
+			"listen": "test",
+			"script": {
+				"type": "text/javascript",
+				"exec": [
+					""
+				]
+			}
+		}
+	],
+	"variable": [
+		{
+			"key": "baseUrl",
+			"value": "https://api.trello.com/1",
+			"type": "string"
+		},
+		{
+			"key": "boardName",
+			"value": "Tablica z API"
+		},
+		{
+			"key": "boardID",
+			"value": ""
+		}
+	]
+}
